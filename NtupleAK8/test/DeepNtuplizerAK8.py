@@ -6,7 +6,8 @@ from FWCore.ParameterSet.VarParsing import VarParsing
 options = VarParsing('analysis')
 
 options.outputFile = 'output.root'
-options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/BulkGravTohhTohbbhbb_narrow_M-1000_13TeV-madgraph/MINIAODSIM/92X_upgrade2017_realistic_v10-v2/90000/04DF3196-3B99-E711-AE12-008CFAC93CE8.root']
+options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAODv2/GluGluToBulkGravitonToHHTo4B_M-800_narrow_13TeV-madgraph/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/56524A0B-9C44-E811-B471-0CC47A4D7628.root']
+#options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/BulkGravTohhTohbbhbb_narrow_M-1000_13TeV-madgraph/MINIAODSIM/92X_upgrade2017_realistic_v10-v2/90000/04DF3196-3B99-E711-AE12-008CFAC93CE8.root']
 #['root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/3E39F14C-0420-E811-B368-0025905A6068.root', 
 #		      'root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/40C11C7A-0E1F-E811-8A3A-0025905A607E.root', 
 #		      'root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/F297A748-B220-E811-B9DD-0CC47A4C8EA8.root']
