@@ -1,5 +1,5 @@
 import os
-from CRABClient.UserUtilities import config, getUsernameFromSiteDB
+from CRABClient.UserUtilities import config
 config = config()
 
 config.General.requestName = '_requestName_'
@@ -9,8 +9,7 @@ config.General.transferLogs = False
 
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = '_psetName_'
-config.JobType.allowUndistributedCMSSW = True
-#config.JobType.sendExternalFolder = True
+# config.JobType.sendExternalFolder = True
 
 config.Data.inputDataset = '_inputDataset_'
 config.JobType.pyCfgParams = _pyCfgParams_
@@ -24,7 +23,7 @@ config.Data.splitting = 'Automatic'
 config.Data.unitsPerJob = 200
 config.Data.outLFNDirBase = '/store/user/%s/_outLFNDirBase_' % (getUsernameFromSiteDB())
 config.Data.publication = False
-config.Data.ignoreLocality = True
+#config.Data.allowNonValidInputDataset = True
 
 # uncomment this part to use CRAB to submit to FNAL_LPC
 # config.Data.ignoreLocality = True
@@ -40,5 +39,6 @@ config.Data.ignoreLocality = True
 
 config.Site.storageSite = '_storageSite_'
 #config.Site.storageSite = "T2_DE_RWTH"
+
 
 

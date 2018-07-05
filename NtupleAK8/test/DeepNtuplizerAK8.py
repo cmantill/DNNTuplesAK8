@@ -6,7 +6,8 @@ from FWCore.ParameterSet.VarParsing import VarParsing
 options = VarParsing('analysis')
 
 options.outputFile = 'output.root'
-options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/BulkGravTohhTohbbhbb_narrow_M-1000_13TeV-madgraph/MINIAODSIM/92X_upgrade2017_realistic_v10-v2/90000/04DF3196-3B99-E711-AE12-008CFAC93CE8.root']
+options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAODv2/GluGluToBulkGravitonToHHTo4B_M-800_narrow_13TeV-madgraph/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/56524A0B-9C44-E811-B471-0CC47A4D7628.root']
+#options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/BulkGravTohhTohbbhbb_narrow_M-1000_13TeV-madgraph/MINIAODSIM/92X_upgrade2017_realistic_v10-v2/90000/04DF3196-3B99-E711-AE12-008CFAC93CE8.root']
 #['root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/3E39F14C-0420-E811-B368-0025905A6068.root', 
 #		      'root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/40C11C7A-0E1F-E811-8A3A-0025905A607E.root', 
 #		      'root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/F297A748-B220-E811-B9DD-0CC47A4C8EA8.root']
@@ -18,7 +19,7 @@ options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/
 #options.outputFile = 'output_bulk.root'
 #options.inputFiles = 'file:/eos/user/a/anovak/022C3683-D4AB-E611-AC4D-3417EBE70078.root'  #include file: for local files, for catalogues /store...
 #options.inputFiles = 'file:/afs/cern.ch/work/l/lmastrol/public/deep-c_tagging/HIG-RunIISummer16MiniAODv2-04133.root'
-#options.inputFiles = 'file:/afs/cern.ch/work/l/lmastrol/public/deep-c_tagging/BulkGravHH4C_M1000-RunIISummer16MiniAODv2.root'
+#options.inputFiles = ['/store/mc/RunIIFall17MiniAOD/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/0820742A-B729-E811-AC15-24BE05C6E711.root'] 
 #options.inputFiles = 'file:/eos/user/a/anovak/DNNtuples/CMSSW_8_0_28/src/DeepNTuples/00D74F9D-9D14-E711-A4C0-1866DA879444.root'
 #options.inputFiles = 'file:/afs/cern.ch/work/l/lmastrol/public/deep-c_tagging/GluGluHToCC_official_highStat_0219759C-1DD6-E711-BCCA-02163E0144F7.root'
 #options.inputFiles = 'file:/afs/cern.ch/work/l/lmastrol/public/deep-c_tagging/GluGluHToBB_official_highStat_E6E6BC68-F543-E611-AB6F-003048CD716E.root'
@@ -52,7 +53,7 @@ if not options.inputScript:  # this is probably for testing
 
 process.options = cms.untracked.PSet(
    allowUnscheduled = cms.untracked.bool(True),  
-   wantSummary=cms.untracked.bool(True)
+   wantSummary=cms.untracked.bool(False)
 )
 
 print ('Using output file ' + options.outputFile)
@@ -111,6 +112,7 @@ bTagDiscriminators = [
 	'pfDeepCSVJetTags:probc',
 	'pfDeepCSVJetTags:probbb',
 	 #'pfDeepCSVJetTags:probcc',
+
 	'pfBoostedDoubleSecondaryVertexAK8BJetTags'
 ]
 
