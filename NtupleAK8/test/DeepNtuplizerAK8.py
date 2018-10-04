@@ -7,15 +7,15 @@ options = VarParsing('analysis')
 
 options.outputFile = 'output.root'
 options.inputFiles = [
-'root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/BulkGravTohhTohbbhbb_narrow_M-1000_13TeV-madgraph/MINIAODSIM/92X_upgrade2017_realistic_v10-v2/90000/04DF3196-3B99-E711-AE12-008CFAC93CE8.root'
-#'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAODv2/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/86032B22-7943-E811-AF6F-D0946626135C.root'
+#'root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/BulkGravTohhTohbbhbb_narrow_M-1000_13TeV-madgraph/MINIAODSIM/92X_upgrade2017_realistic_v10-v2/90000/04DF3196-3B99-E711-AE12-008CFAC93CE8.root'
+'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAODv2/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/86032B22-7943-E811-AF6F-D0946626135C.root'
 #'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAOD/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/0820742A-B729-E811-AC15-24BE05C6E711.root', 'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAOD/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/3290B112-B129-E811-9DE9-008CFAF55422.root'
 #'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAODv2/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/86032B22-7943-E811-AF6F'
 #'root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/BulkGravTohhTohbbhbb_narrow_M-2500_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/0A83E4E2-34B6-E611-89A0-549F35AE4FA2.root',
 #'file:/eos/user/a/anovak/022C3683-D4AB-E611-AC4D-3417EBE70078.root'  #include file: for local files, for catalogues /store..
 ]
-#options.maxEvents = -1
-options.maxEvents = 1000
+options.maxEvents = -1
+#options.maxEvents = 1000
 
 options.register('inputScript', '', VarParsing.multiplicity.singleton, VarParsing.varType.string, "input Script")
 options.register('skipEvents', 0, VarParsing.multiplicity.singleton, VarParsing.varType.int, "skip N events")
