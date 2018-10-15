@@ -17,22 +17,29 @@ config.JobType.pyCfgParams = _pyCfgParams_
 config.JobType.pyCfgParams += ['inputDataset=%s' % config.Data.inputDataset]
 # config.JobType.inputFiles = []
 
-#config.Data.inputDBS = 'phys03'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = _unitsPerJob_
+#config.Data.splitting = 'Automatic'
+#config.Data.unitsPerJob = 200
 config.Data.outLFNDirBase = '/store/user/%s/_outLFNDirBase_' % (getUsernameFromSiteDB())
 config.Data.publication = False
 config.Data.ignoreLocality = True
 
+# uncomment this part to use CRAB to submit to FNAL_LPC
+# config.Data.ignoreLocality = True
+# config.Site.whitelist = ['T3_US_FNALLPC']
+# config.Site.ignoreGlobalBlacklist = True
 
-config.Site.whitelist = ['T2_CH_CERN', 'T2_DE_DESY', 'T2_DE_RWTH']
+# Run in DESY/RWTH
+#config.Site.whitelist = ['T2_CH_CERN', 'T2_DE_DESY', 'T2_DE_RWTH']
+config.Site.whitelist = ['T2_DE_RWTH']
 #config.Site.ignoreGlobalBlacklist = True
-#config.Site.blacklist = ['T3_US_UMiss', ]
+#config.Site.blacklist = ['T3_US_UMiss']
+config.User.voGroup = 'dcms'
+config.User.voRole = 'NULL'
 
 #config.Site.storageSite = '_storageSite_'
 config.Site.storageSite = "T2_DE_RWTH"
 
-config.User.voGroup = 'dcms'
-config.User.voRole = 'NULL'
 
