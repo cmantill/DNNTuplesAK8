@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 
+
 from argparse import ArgumentParser
 import os
 import subprocess
@@ -36,12 +37,12 @@ if not os.path.isdir(args.outdir):
 #read number of jobs
 file=open(args.outdir+'/nentries','r')
 nJobs=file.read()
+#nJobs = 20
 
 listtoberun=[]
 listsucc=[]
 
 for j in range(int(nJobs)):
-    
     if os.path.exists(args.outdir+'/'+str(j)+'.succ'):
         listsucc.append(j)
         continue
@@ -66,7 +67,7 @@ def _run(jobid):
 
 n_threads = int(multiprocessing.cpu_count() / 2)
 print "n_threads =", n_threads
-n_threads = 2
+n_threads = 8
 print "n_threads =", n_threads
 pool = multiprocessing.Pool(n_threads)
 results = pool.map(_run, listtoberun)

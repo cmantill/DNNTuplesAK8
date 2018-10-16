@@ -103,7 +103,7 @@ public:
     try {
       auto *tv=dynamic_cast<TreeVar<Type>*>(data.at(fullname));
       if (!tv) throw std::invalid_argument("[TreeData::fill] Filling a different type than registered: "+fullname);
-      tv->fill(var);
+      tv->fill( (typeid(Type)==typeid(float) && std::isnan(float(var))) ? -50 : var );
     } catch (const std::out_of_range& e){
       throw std::invalid_argument("[TreeData::fill] Variable " + fullname + " is not registered!");
     }
@@ -114,7 +114,7 @@ public:
     try {
       auto *tv=dynamic_cast<TreeMultiVar<Type>*>(data.at(fullname));
       if (!tv) throw std::invalid_argument("[TreeData::fillMulti] Filling a different type than registered: "+fullname);
-      tv->fill(var);
+      tv->fill( (typeid(Type)==typeid(float) && std::isnan(float(var))) ? -50 : var );
     } catch (const std::out_of_range& e){
       throw std::invalid_argument("[TreeData::fillMulti] Variable " + name + " is not booked!");
     }

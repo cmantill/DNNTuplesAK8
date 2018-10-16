@@ -43,24 +43,32 @@ TString createTempName(){
     return n;
 }
 
-TString prependXRootD(const TString& path){
-
-    return path; //not used
-    TString full_path = realpath(path, NULL);
-    if(full_path.BeginsWith("/eos/cms/")){
+TString prependXRootD(TString& path){
+    //TString path = realpath(path, NULL);
+    //std::cout << path <<std::endl;
+    if(path.BeginsWith("/eos/cms/")){
         TString append="root://eoscms.cern.ch//";
         TString s_remove="/eos/cms/";
-        TString newpath (full_path(s_remove.Length(),full_path.Length()));
+        TString newpath (path(s_remove.Length(),path.Length()));
         newpath=append+newpath;
         return newpath;
     }
-    else if(full_path.BeginsWith("/eos/uscms/")){
+    else if(path.BeginsWith("/eos/uscms/")){
         TString append="root://cmseos.fnal.gov//";
         TString s_remove="/eos/uscms/";
-        TString newpath (full_path(s_remove.Length(),full_path.Length()));
+        TString newpath (path(s_remove.Length(),path.Length()));
         newpath=append+newpath;
         return newpath;
     }
+    else if(path.BeginsWith("//dcap")){
+        path.Replace(0,2,"");
+        //std::cout << "TEST" <<std::endl;
+    }
+    else if(path.BeginsWith("//root")){
+        path.Replace(0,2,"");
+        //std::cout << "TEST" <<std::endl;
+    }
+   
     return path;
 }
 
@@ -137,6 +145,7 @@ std::vector<TChain* > mergeDescriptor::createChains(
             delete b;
     branchinfos.clear();
     entriesperchain=std::vector<size_t>(infiles.size(),0);
+    std::cout << "WOOOOW" <<std::endl;
 
     branchinfos.push_back(new JetInfoFillerAK8());
     branchinfos.push_back(new FatJetInfoFiller());
@@ -152,6 +161,8 @@ std::vector<TChain* > mergeDescriptor::createChains(
         chainname+="_";
         chainname+=ntimescalled;
         auto t = new TChain(chainname,chainname);
+        std::cout << t <<std::endl;
+         std::cout << t->ClassName() <<std::endl;
         chains.push_back(t); //to get ahead of root background lsiting problems...
         treewriters.push_back(new TreeWriter(t, chainname, true));
     }
@@ -159,8 +170,11 @@ std::vector<TChain* > mergeDescriptor::createChains(
     for(size_t i=0;i<infiles.size();i++){
         for(const auto& f:infiles.at(i)){
             TString xrootdedpath=f;
-            if(usexrootd)
-                xrootdedpath=prependXRootD(xrootdedpath);
+            //std::cout << f <<std::endl;
+            //if(usexrootd) //
+            xrootdedpath=prependXRootD(xrootdedpath);
+            //std::cout << xrootdedpath <<std::endl;
+            //chains.at(i)->Add(xrootdedpath+"/tree");
             chains.at(i)->Add(xrootdedpath+"/deepntuplizer/tree");
         }
         for(auto& bi:branchinfos){

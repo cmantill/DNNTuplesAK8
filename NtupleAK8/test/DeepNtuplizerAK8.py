@@ -6,24 +6,16 @@ from FWCore.ParameterSet.VarParsing import VarParsing
 options = VarParsing('analysis')
 
 options.outputFile = 'output.root'
-options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAODv2/GluGluToBulkGravitonToHHTo4B_M-800_narrow_13TeV-madgraph/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/56524A0B-9C44-E811-B471-0CC47A4D7628.root']
-#options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/BulkGravTohhTohbbhbb_narrow_M-1000_13TeV-madgraph/MINIAODSIM/92X_upgrade2017_realistic_v10-v2/90000/04DF3196-3B99-E711-AE12-008CFAC93CE8.root']
-#['root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/3E39F14C-0420-E811-B368-0025905A6068.root', 
-#		      'root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/40C11C7A-0E1F-E811-8A3A-0025905A607E.root', 
-#		      'root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValTTbar_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/F297A748-B220-E811-B9DD-0CC47A4C8EA8.root']
-#options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/BulkGravTohhTohbbhbb_narrow_M-2500_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/0A83E4E2-34B6-E611-89A0-549F35AE4FA2.root',
-#		      'root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/BulkGravTohhTohbbhbb_narrow_M-2500_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/A88400F5-39B6-E611-BEB3-A0369F7F9DE0.root']
-#options.inputFiles = ['root://cmsxrootd.fnal.gov//store/relval/CMSSW_9_2_2/RelValTTbar_13/MINIAODSIM/PU25ns_92X_upgrade2017_realistic_v1-v1/10000/8E7EE25F-294E-E711-A5CC-0025905B8610.root']
-#options.inputFiles = ['/store/relval/CMSSW_8_0_21/RelValTTbar_13/MINIAODSIM/PU25ns_80X_mcRun2_asymptotic_2016_TrancheIV_v6_Tr4GT_v6-v1/10000/74087230-AB98-E611-93EF-0025905A6138.root']
-#options.inputFiles = ['root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValQCD_FlatPt_15_3000_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/8C8833F5-D822-E811-8ED5-0CC47A4D76A2.root']
-#options.outputFile = 'output_bulk.root'
-#options.inputFiles = 'file:/eos/user/a/anovak/022C3683-D4AB-E611-AC4D-3417EBE70078.root'  #include file: for local files, for catalogues /store...
-#options.inputFiles = 'file:/afs/cern.ch/work/l/lmastrol/public/deep-c_tagging/HIG-RunIISummer16MiniAODv2-04133.root'
-#options.inputFiles = ['/store/mc/RunIIFall17MiniAOD/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/0820742A-B729-E811-AC15-24BE05C6E711.root'] 
-#options.inputFiles = 'file:/eos/user/a/anovak/DNNtuples/CMSSW_8_0_28/src/DeepNTuples/00D74F9D-9D14-E711-A4C0-1866DA879444.root'
-#options.inputFiles = 'file:/afs/cern.ch/work/l/lmastrol/public/deep-c_tagging/GluGluHToCC_official_highStat_0219759C-1DD6-E711-BCCA-02163E0144F7.root'
-#options.inputFiles = 'file:/afs/cern.ch/work/l/lmastrol/public/deep-c_tagging/GluGluHToBB_official_highStat_E6E6BC68-F543-E611-AB6F-003048CD716E.root'
+options.inputFiles = [
+#'root://cmsxrootd.fnal.gov//store/mc/RunIISummer17MiniAOD/BulkGravTohhTohbbhbb_narrow_M-1000_13TeV-madgraph/MINIAODSIM/92X_upgrade2017_realistic_v10-v2/90000/04DF3196-3B99-E711-AE12-008CFAC93CE8.root'
+'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAODv2/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/86032B22-7943-E811-AF6F-D0946626135C.root'
+#'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAOD/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/0820742A-B729-E811-AC15-24BE05C6E711.root', 'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAOD/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_94X_mc2017_realistic_v11-v1/90000/3290B112-B129-E811-9DE9-008CFAF55422.root'
+#'root://cmsxrootd.fnal.gov//store/mc/RunIIFall17MiniAODv2/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/86032B22-7943-E811-AF6F'
+#'root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/BulkGravTohhTohbbhbb_narrow_M-2500_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/0A83E4E2-34B6-E611-89A0-549F35AE4FA2.root',
+#'file:/eos/user/a/anovak/022C3683-D4AB-E611-AC4D-3417EBE70078.root'  #include file: for local files, for catalogues /store..
+]
 options.maxEvents = -1
+#options.maxEvents = 1000
 
 options.register('inputScript', '', VarParsing.multiplicity.singleton, VarParsing.varType.string, "input Script")
 options.register('skipEvents', 0, VarParsing.multiplicity.singleton, VarParsing.varType.int, "skip N events")
