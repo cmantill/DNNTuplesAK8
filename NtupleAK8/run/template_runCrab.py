@@ -21,7 +21,8 @@ config.Data.inputDBS = 'global'
 #config.Data.unitsPerJob = _unitsPerJob_
 config.Data.splitting = 'Automatic'
 config.Data.unitsPerJob = 200
-config.Data.outLFNDirBase = '/store/user/%s/_outLFNDirBase_' % (getUsernameFromSiteDB())
+#config.Data.outLFNDirBase = '/store/user/%s/_outLFNDirBase_' % (getUsernameFromSiteDB())
+config.Data.outLFNDirBase = '_outLFNDirBase_'
 config.Data.publication = False
 #config.Data.allowNonValidInputDataset = True
 
