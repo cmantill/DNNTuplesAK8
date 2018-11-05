@@ -1,6 +1,6 @@
 import os
 
-dirs = ['Hcc', "Hbb2","Z", "qcd"]
+dirs = ['Hcc', "Hbb","Z", "qcd"]
 for d in dirs:
 	tests = os.listdir(d+"/test")
 	f = open("list_test_{}.txt".format(d), "w")

@@ -12,8 +12,11 @@ options = VarParsing('analysis')
 #options.inputFiles = ['root://eoscms.cern.ch//store/relval/CMSSW_10_1_0_pre2/RelValQCD_FlatPt_15_3000_13/MINIAODSIM/100X_mcRun2_asymptotic_v2_FastSim-v1/20000/8C8833F5-D822-E811-8ED5-0CC47A4D76A2.root']
 
 options.outputFile = 'output.root'
-options.inputFiles = ['root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/BulkGravTohhTohbbhbb_narrow_M-2500_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/0A83E4E2-34B6-E611-89A0-549F35AE4FA2.root',
-		      'root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/BulkGravTohhTohbbhbb_narrow_M-2500_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/A88400F5-39B6-E611-BEB3-A0369F7F9DE0.root']
+options.inputFiles = [
+'root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/BulkGravTohhTohbbhbb_narrow_M-2500_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/0A83E4E2-34B6-E611-89A0-549F35AE4FA2.root',
+#	'root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/GluGluToBulkGravitonToHHTo4C_M-1000_narrow_13TeV-madgraph-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/10000/B26AF81A-93F3-E711-8276-0025905B85DC.root',
+	#'root://cmsxrootd.fnal.gov//store/mc/RunIISummer16MiniAODv2/ZJetsToQQ_HT600toInf_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/16DC0526-F4FA-E611-938E-6CC2173BBA40.root/'
+	]
 
 options.maxEvents = -1
 

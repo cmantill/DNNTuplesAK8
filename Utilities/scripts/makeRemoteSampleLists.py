@@ -10,11 +10,12 @@ import ROOT
 
 #names = ["QCD", "Glu", "Bul", "GluGluH"]
 #names = ["GluGluH"]
-names = ["Hcc", "Hbb", "Z"]
-names = ["Hbb"]
+#names = ["Hcc", "Hbb", "Z"]
+#names = ["Hbb"]
+names = ["Z", "Hcc"]
 
-dcap = "dcap://grid-dcap-extern.physik.rwth-aachen.de/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/80xv2"
-srm = "srm://grid-srm.physik.rwth-aachen.de:8443/srm/managerv2?SFN=/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/80xv2"
+dcap = "dcap://grid-dcap-extern.physik.rwth-aachen.de/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/80xv4"
+srm = "srm://grid-srm.physik.rwth-aachen.de:8443/srm/managerv2?SFN=/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/80xv4"
 fnal = False
 if fnal:dirs = os.popen("eos root://cmseos.fnal.gov ls /store/group/lpchbb/20180524_ak8_94x/").read().split("\n")
 #else:	dirs = os.popen("gfal-ls "+srm).read().split("\n")
@@ -49,10 +50,11 @@ for i, d in enumerate(dirs):
 	
 	else:
 		#sd = os.popen("gfal-ls "+srm+"/"+d).read().split('\n')
-		sd = os.popen("lcg-ls "+"srm://grid-srm.physik.rwth-aachen.de:8443/srm/managerv2?SFN=/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/80xv2"+"/"+d).read().split('\n')
+		sd = os.popen("lcg-ls "+"srm://grid-srm.physik.rwth-aachen.de:8443/srm/managerv2?SFN=/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/80xv4"+"/"+d).read().split('\n')
 		for s in sd:
 			if not s.endswith(tuple(["madgraph", "pythia8"])):continue 
 			fs = []
+			print s
 			#sd2 = os.popen("gfal-ls "+srm+"/"+d+"/"+s).read().replace("\n", "")
 			#sd3 = os.popen("gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2).read().replace("\n", "")
 			#sd4 = os.popen("gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2+"/"+sd3).read().replace("\n", "")
@@ -64,7 +66,7 @@ for i, d in enumerate(dirs):
 			#print "gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2+"/"+sd3+'/'+sd4
 			#print files
 			s = s.replace("/pnfs/physik.rwth-aachen.de/cms", "")
-			srm = srm.replace(".de/cms/store/user/anovak/80xv2", ".de/cms")
+			srm = srm.replace(".de/cms/store/user/anovak/80xv4", ".de/cms")
 			sd2 = os.popen("lcg-ls "+srm+s).read().replace("\n", "").replace("/pnfs/physik.rwth-aachen.de/cms", "")
 			sd3 = os.popen("lcg-ls "+srm+sd2).read().replace("\n", "").replace("/pnfs/physik.rwth-aachen.de/cms", "")
 			sd4 = os.popen("lcg-ls "+srm+sd3).read().replace("\n", "").replace("/pnfs/physik.rwth-aachen.de/cms", "")
