@@ -10,13 +10,16 @@ import ROOT
 
 #names = ["QCD", "Glu", "Bul", "GluGluH"]
 #names = ["GluGluH"]
-names = ["Hbb"]
+names = ["Hcc", "Hbb", "Z"]
+names = ["Zqq"]
 
 dcap = "dcap://grid-dcap-extern.physik.rwth-aachen.de/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/94xv5"
 srm = "srm://grid-srm.physik.rwth-aachen.de:8443/srm/managerv2?SFN=/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/94xv5"
 fnal = False
 if fnal:dirs = os.popen("eos root://cmseos.fnal.gov ls /store/group/lpchbb/20180524_ak8_94x/").read().split("\n")
-else:	dirs = os.popen("gfal-ls "+srm).read().split("\n")
+#else:	dirs = os.popen("gfal-ls "+srm).read().split("\n")
+else:	dirs = os.popen("lcg-ls "+srm).read().split("\n")
+dirs = [d.split("/")[-1] for d in dirs]
 
 print "Processsing directories starting with: ", names
 print "======================================="
@@ -45,22 +48,36 @@ for i, d in enumerate(dirs):
 				        f.write('\n'.join(files))
 	
 	else:
-		sd = os.popen("gfal-ls "+srm+"/"+d).read().split('\n')
+		#sd = os.popen("gfal-ls "+srm+"/"+d).read().split('\n')
+		sd = os.popen("lcg-ls "+"srm://grid-srm.physik.rwth-aachen.de:8443/srm/managerv2?SFN=/pnfs/physik.rwth-aachen.de/cms/store/user/anovak/94xv5"+"/"+d).read().split('\n')
 		for s in sd:
-			if not s.endswith(tuple(["madgraph", "pythia8"])):continue 
+			#if not s.endswith(tuple(["madgraph", "pythia8"])):continue 
 			fs = []
-			sd2 = os.popen("gfal-ls "+srm+"/"+d+"/"+s).read().replace("\n", "")
-			sd3 = os.popen("gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2).read().replace("\n", "")
-			sd4 = os.popen("gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2+"/"+sd3).read().replace("\n", "")
-			files = os.popen("gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2+"/"+sd3+'/'+sd4).read().split("\n")
+			#sd2 = os.popen("gfal-ls "+srm+"/"+d+"/"+s).read().replace("\n", "")
+			#sd3 = os.popen("gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2).read().replace("\n", "")
+			#sd4 = os.popen("gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2+"/"+sd3).read().replace("\n", "")
+			#files = os.popen("gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2+"/"+sd3+'/'+sd4).read().split("\n")
+			#path = dcap+"/"+d+"/"+s+"/"+sd2+"/"+sd3+"/"+sd4
+			#for f in files:
+			#	if not f.endswith("root"): continue
+			#	fs.append(path+"/"+f)
 			#print "gfal-ls "+srm+"/"+d+"/"+s+"/"+sd2+"/"+sd3+'/'+sd4
 			#print files
-			#continue
-			path = dcap+"/"+d+"/"+s+"/"+sd2+"/"+sd3+"/"+sd4
+			print s
+			s = s.replace("/pnfs/physik.rwth-aachen.de/cms", "")
+			srm = srm.replace(".de/cms/store/user/anovak/94xv5", ".de/cms")
+			sd2 = os.popen("lcg-ls "+srm+s).read().replace("\n", "").replace("/pnfs/physik.rwth-aachen.de/cms", "")
+			print sd2
+			sd3 = os.popen("lcg-ls "+srm+sd2).read().replace("\n", "").replace("/pnfs/physik.rwth-aachen.de/cms", "")
+			sd4 = os.popen("lcg-ls "+srm+sd3).read().replace("\n", "").replace("/pnfs/physik.rwth-aachen.de/cms", "")
+			files = os.popen("lcg-ls "+srm+sd4).read().split("\n")
+			files = [f.replace("/pnfs/physik.rwth-aachen.de/cms", "") for f in files]
 			for f in files:
+				if len(f) < 5: continue
 				if not f.endswith("root"): continue
-				fs.append(path+"/"+f)
-
-			print fs
+				fs.append("dcap://grid-dcap-extern.physik.rwth-aachen.de/pnfs/physik.rwth-aachen.de/cms/"+f)
+			s = s.split("/")[-1]
+			#print fs
+			
 			with open("lists/"+s+".txt", 'w') as f:
 			        f.write('\n'.join(fs))
