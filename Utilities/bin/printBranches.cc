@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     TFile* f = new TFile(samplefile, "READ");
     if (!f)
         return -2;
-    TTree* t = (TTree*) f->Get("deepntuplizer/tree");
+    TTree* t = (TTree*) f->Get("tree");
 
     if (!t)
         return -3;

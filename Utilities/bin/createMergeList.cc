@@ -16,6 +16,7 @@
  */
 
 #include "TString.h"
+#include "TDCacheFile.h"
 #include "TFile.h"
 #include "TChain.h"
 #include "TTree.h"
@@ -114,7 +115,6 @@ mergeDescriptor prepareSplitting(const std::vector<std::vector<TString> >& infil
 
 
     TRandom3 rand;
-
 
     std::vector<double> histobins(1,0);
     histobins.insert(histobins.end(),out.fractions.begin(),out.fractions.end());
@@ -282,7 +282,8 @@ int main(int argc, char *argv[]){
         TString samplefile=argv[i];
         TString inpath=dirname(argv[i]);
         inpath+="/";
-        infiles.push_back(readSampleFile(samplefile,inpath));
+        //infiles.push_back(readSampleFile(samplefile,inpath));
+        infiles.push_back(readSampleFile(samplefile, "/"));
     }
 
 

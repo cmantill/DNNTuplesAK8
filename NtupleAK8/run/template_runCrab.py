@@ -1,5 +1,5 @@
 import os
-from CRABClient.UserUtilities import config
+from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
 
 config.General.requestName = '_requestName_'
@@ -9,7 +9,8 @@ config.General.transferLogs = False
 
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = '_psetName_'
-# config.JobType.sendExternalFolder = True
+config.JobType.allowUndistributedCMSSW = True
+#config.JobType.sendExternalFolder = True
 
 config.Data.inputDataset = '_inputDataset_'
 config.JobType.pyCfgParams = _pyCfgParams_
@@ -19,14 +20,26 @@ config.JobType.pyCfgParams += ['inputDataset=%s' % config.Data.inputDataset]
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = _unitsPerJob_
-# config.Data.totalUnits = 10
-config.Data.outLFNDirBase = '_outLFNDirBase_'
+#config.Data.splitting = 'Automatic'
+#config.Data.unitsPerJob = 200
+config.Data.outLFNDirBase = '/store/user/%s/_outLFNDirBase_' % (getUsernameFromSiteDB())
 config.Data.publication = False
-#config.Data.allowNonValidInputDataset = True
+config.Data.ignoreLocality = True
 
 # uncomment this part to use CRAB to submit to FNAL_LPC
 # config.Data.ignoreLocality = True
 # config.Site.whitelist = ['T3_US_FNALLPC']
 # config.Site.ignoreGlobalBlacklist = True
 
-config.Site.storageSite = '_storageSite_'
+# Run in DESY/RWTH
+#config.Site.whitelist = ['T2_CH_CERN', 'T2_DE_DESY', 'T2_DE_RWTH']
+config.Site.whitelist = ['T2_DE_RWTH']
+#config.Site.ignoreGlobalBlacklist = True
+#config.Site.blacklist = ['T3_US_UMiss']
+config.User.voGroup = 'dcms'
+config.User.voRole = 'NULL'
+
+#config.Site.storageSite = '_storageSite_'
+config.Site.storageSite = "T2_DE_RWTH"
+
+
