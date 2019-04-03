@@ -40,6 +40,7 @@ config.User.voRole = 'NULL'
 #config.Site.storageSite = '_storageSite_'
 config.Site.storageSite = "T2_DE_RWTH"
 
+config.JobType.allowUndistributedCMSSW = True
 
 # uncomment this part to use CRAB to submit to FNAL LPC
 #config.Data.ignoreLocality = True
@@ -47,8 +48,8 @@ config.Site.storageSite = "T2_DE_RWTH"
 #config.Site.ignoreGlobalBlacklist = True
 
 # uncomment this to run in DESY/RWTH
-#config.Data.ignoreLocality = True
+config.Data.ignoreLocality = True
 #config.Site.whitelist = ['T2_CH_CERN', 'T2_DE_DESY', 'T2_DE_RWTH']
 #config.Site.ignoreGlobalBlacklist = True
 
-config.Site.storageSite = '_storageSite_'
+#config.Site.storageSite = '_storageSite_'
