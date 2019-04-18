@@ -8,6 +8,7 @@
 #ifndef NTUPLECOMMONS_INTERFACE_TREEWRITER_H_
 #define NTUPLECOMMONS_INTERFACE_TREEWRITER_H_
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <TString.h>
@@ -26,7 +27,7 @@ public :
 
   TString getTreeName() const { return fTreeName; }
   void    setTreeName(TString n) { fTreeName = n;  fTree->SetName(fTreeName.Data()); }
-  void    fill() { fTree->Fill();  }
+  void    fill() {     fTree->Fill();   }
   TTree   *getTree() { return fTree; }
 
   template<class T>

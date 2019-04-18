@@ -8,6 +8,7 @@
 #ifndef NTUPLECOMMONS_INTERFACE_TREEDATA_H_
 #define NTUPLECOMMONS_INTERFACE_TREEDATA_H_
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <memory>
