@@ -48,7 +48,10 @@ void FatJetInfoFiller::book() {
   data.add<int>("label_H_bb",    0);
   data.add<int>("label_H_cc",    0);
   data.add<int>("label_H_qqqq",  0);
-  data.add<int>("label_H_tautau",0);
+  data.add<int>("label_H_qqlv",  0);
+  data.add<int>("label_H_qqlvi", 0);
+  data.add<int>("label_H_tautau_qqqq",0);
+  data.add<int>("label_H_tautau_qqlv",0);
 
   data.add<int>("label_QCD_bb",  0);
   data.add<int>("label_QCD_cc",  0);
@@ -173,6 +176,13 @@ void FatJetInfoFiller::book() {
   data.add<float>("fj_jetNTracks", 0);
   data.add<float>("fj_nSV", 0);
 
+  // lepton
+  data.add<float>("fj_lsf3", 0);
+  data.add<float>("fj_lepPt", 0);
+  data.add<float>("fj_lepEta", 0);
+  data.add<float>("fj_lepPhi", 0);
+  data.add<int>("fj_lepId", 0);
+
 }
 
 bool FatJetInfoFiller::fill(const pat::Jet& jet, size_t jetidx, const JetHelper& jet_helper) {
@@ -220,7 +230,10 @@ bool FatJetInfoFiller::fill(const pat::Jet& jet, size_t jetidx, const JetHelper&
   data.fill<int>("label_H_bb",    fjlabel.first == FatJetMatching::H_bb);
   data.fill<int>("label_H_cc",    fjlabel.first == FatJetMatching::H_cc);
   data.fill<int>("label_H_qqqq",  fjlabel.first == FatJetMatching::H_qqqq);
-  data.fill<int>("label_H_tautau",fjlabel.first == FatJetMatching::H_tautau);
+  data.fill<int>("label_H_qqlv",  fjlabel.first == FatJetMatching::H_qqlv);
+  data.fill<int>("label_H_qqlvi", fjlabel.first == FatJetMatching::H_qqlvi);
+  data.fill<int>("label_H_tautau_qqqq", fjlabel.first == FatJetMatching::H_tautau_qqqq);
+  data.fill<int>("label_H_tautau_qqlv", fjlabel.first == FatJetMatching::H_tautau_qqlv);
 
   data.fill<int>("label_QCD_bb",  fjlabel.first == FatJetMatching::QCD_bb);
   data.fill<int>("label_QCD_cc",  fjlabel.first == FatJetMatching::QCD_cc);
@@ -229,7 +242,6 @@ bool FatJetInfoFiller::fill(const pat::Jet& jet, size_t jetidx, const JetHelper&
   data.fill<int>("label_QCD_others", fjlabel.first == FatJetMatching::QCD_others);
 
   data.fill<int>("sample_isQCD",  isQCDSample_);
-
 
   // gen-matched particle (top/W/etc.)
   data.fill<float>("fj_gen_pt", fjlabel.second ? fjlabel.second->pt() : -999);
@@ -359,7 +371,74 @@ bool FatJetInfoFiller::fill(const pat::Jet& jet, size_t jetidx, const JetHelper&
   data.fill<float>("fj_jetNTracks", vars.get(reco::btau::jetNTracks));
   data.fill<float>("fj_nSV", vars.get(reco::btau::jetNSecondaryVertices));
 
+  // leptons
+  std::vector<const pat::PackedCandidate*> pfCands;
+  for (const auto * cand : jet_helper.getJetConstituents()){
+    pfCands.push_back(cand);
+  }
+
+  float lepPt(-1),lepEta(-1),lepPhi(-1); int lepId(-1);
+  std::vector<fastjet::PseudoJet> lClusterParticles;
+  for (const auto *cand : pfCands){
+    auto puppiP4 = cand->p4();
+    if (!jet_helper.hasPuppiWeightedDaughters()) puppiP4 *= cand->puppiWeight();
+    fastjet::PseudoJet pPart(puppiP4.px(),puppiP4.py(),puppiP4.pz(),puppiP4.energy());
+    lClusterParticles.emplace_back(pPart);
+    if(std::abs(cand->pdgId())==11 || std::abs(cand->pdgId())==13) {
+      if(puppiP4.pt() > lepPt) {
+        lepPt = puppiP4.pt();
+        lepEta = puppiP4.eta();
+        lepPhi = puppiP4.phi();
+        lepId = std::abs(cand->pdgId());
+      }
+    }
+  }
+  std::sort(lClusterParticles.begin(),lClusterParticles.end(),orderPseudoJet);
+  std::vector<fastjet::PseudoJet> psub_3;
+  float lsf_3 = calculateLSF(lClusterParticles, psub_3, lepPt, lepEta, lepPhi, lepId, 2.0, 3);
+  data.fill<float>("fj_lsf3",    lsf_3);
+  data.fill<float>("fj_lepPt",   lepPt);
+  data.fill<float>("fj_lepEta",  lepEta);
+  data.fill<float>("fj_lepPhi",  lepPhi);
+  data.fill<int>("fj_lepId",     fjlabel.first == lepId);
+
   return true;
+}
+
+float FatJetInfoFiller::calculateLSF(std::vector<fastjet::PseudoJet> iCParticles, std::vector<fastjet::PseudoJet> &lsubjets,
+				     float ilPt, float ilEta, float ilPhi, int ilId, double dr, int nsj) {
+  float lsf(-1);
+  if(ilPt>0 && (ilId == 11 || ilId == 13)) {    
+    TLorentzVector ilep; 
+    if(ilId == 11) ilep.SetPtEtaPhiM(ilPt, ilEta, ilPhi, 0.000511);
+    if(ilId == 13) ilep.SetPtEtaPhiM(ilPt, ilEta, ilPhi, 0.105658);
+    fastjet::JetDefinition lCJet_def(fastjet::kt_algorithm, dr);
+    fastjet::ClusterSequence lCClust_seq(iCParticles, lCJet_def);
+    if (dr > 0.5) {
+      lsubjets = sorted_by_pt(lCClust_seq.exclusive_jets_up_to(nsj));
+    }
+    else {
+      lsubjets = sorted_by_pt(lCClust_seq.inclusive_jets());
+    }
+    int lId(-1);
+    double dRmin = 999.;
+    for (unsigned int i0=0; i0<lsubjets.size(); i0++) {
+      double dR = reco::deltaR(lsubjets[i0].eta(), lsubjets[i0].phi(), ilep.Eta(), ilep.Phi());
+      if ( dR < dRmin ) {
+	dRmin = dR;
+	lId = i0;
+      }
+    }
+    if(lId != -1) {
+      TLorentzVector pVec; pVec.SetPtEtaPhiM(lsubjets[lId].pt(), lsubjets[lId].eta(), lsubjets[lId].phi(), lsubjets[lId].m());
+      lsf = ilep.Pt()/pVec.Pt();
+    }
+  }
+  return lsf;
+}
+
+bool FatJetInfoFiller::orderPseudoJet(fastjet::PseudoJet j1, fastjet::PseudoJet j2) {
+  return j1.perp2() > j2.perp2();
 }
 
 } /* namespace deepntuples */

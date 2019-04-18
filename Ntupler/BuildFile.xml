@@ -5,6 +5,8 @@
 <use name="DeepNTuples/NtupleCommons"/>
 <use name="DeepNTuples/FatJetHelpers"/>
 <use name="DeepNTuples/BTagHelpers"/>
+<use name="fastjet"/>
+<use name="fastjet-contrib"/>
 <export>
   <lib   name="1"/>
 </export>

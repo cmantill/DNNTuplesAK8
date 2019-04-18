@@ -14,6 +14,10 @@
 #include "DeepNTuples/NtupleCommons/interface/NtupleBase.h"
 #include "DeepNTuples/FatJetHelpers/interface/FatJetMatching.h"
 
+#include <TLorentzVector.h>
+
+#include "fastjet/PseudoJet.hh"
+#include <fastjet/JetDefinition.hh>
 
 namespace deepntuples {
 
@@ -34,6 +38,10 @@ protected:
   virtual void book() override;
   // fill the branches
   virtual bool fill(const pat::Jet &jet, size_t jetidx, const JetHelper &jet_helper) override;
+  // lsf 
+  static bool orderPseudoJet(fastjet::PseudoJet j1, fastjet::PseudoJet j2);
+  float calculateLSF(std::vector<fastjet::PseudoJet> iCParticles, std::vector<fastjet::PseudoJet> &lsubjets,
+			     float ilPt, float ilEta, float ilPhi, int ilId, double dr, int nsj);
 
 private:
   FatJetMatching fjmatch_;
