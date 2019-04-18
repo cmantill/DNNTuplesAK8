@@ -4,4 +4,6 @@
 <use name="FWCore/ServiceRegistry"/>
 <use name="CommonTools/UtilAlgos"/>
 <use name="DeepNTuples/Ntupler"/>
+<use name="fastjet"/>
+<use name="fastjet-contrib"/>
 <flags EDM_PLUGIN="1"/>

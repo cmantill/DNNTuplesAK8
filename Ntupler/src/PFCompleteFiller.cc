@@ -221,7 +221,6 @@ bool PFCompleteFiller::fill(const pat::Jet& jet, size_t jetidx, const JetHelper&
     data.fillMulti<float>("pfcand_btagJetDistVal", trkinfo.getTrackJetDistVal());
     data.fillMulti<float>("pfcand_btagJetDistSig", trkinfo.getTrackJetDistSig());
 
-
   }
 
 
