@@ -11,6 +11,9 @@
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 #include "PhysicsTools/SelectorUtils/interface/PFJetIDSelectionFunctor.h"
+#include "DataFormats/METReco/interface/PFMET.h"
+#include "DataFormats/METReco/interface/PFMETCollection.h"
+#include "DataFormats/PatCandidates/interface/MET.h"
 
 #include "DeepNTuples/NtupleCommons/interface/NtupleBase.h"
 #include "DeepNTuples/BTagHelpers/interface/FlavorDefinition.h"
@@ -47,10 +50,12 @@ private:
   edm::EDGetTokenT<reco::VertexCollection> vtxToken_;
   edm::EDGetTokenT<std::vector<PileupSummaryInfo>> puToken_;
   edm::EDGetTokenT<double> rhoToken_;
+  edm::EDGetTokenT<pat::METCollection> metToken_;
 
   edm::Handle<reco::VertexCollection> vertices;
   edm::Handle<std::vector<PileupSummaryInfo>> puInfo;
   edm::Handle<double> rhoInfo;
+  edm::Handle<pat::METCollection> metInfo;
 
   unsigned event_ = 0;
 
