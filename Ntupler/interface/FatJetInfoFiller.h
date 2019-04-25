@@ -13,11 +13,12 @@
 
 #include "DeepNTuples/NtupleCommons/interface/NtupleBase.h"
 #include "DeepNTuples/FatJetHelpers/interface/FatJetMatching.h"
-
+#include "DeepNTuples/FatJetHelpers/interface/EnergyCorrelations.h"
 #include <TLorentzVector.h>
 
 #include "fastjet/PseudoJet.hh"
 #include <fastjet/JetDefinition.hh>
+#include "fastjet/contrib/SoftDrop.hh"
 
 namespace deepntuples {
 
@@ -42,6 +43,8 @@ protected:
   static bool orderPseudoJet(fastjet::PseudoJet j1, fastjet::PseudoJet j2);
   float calculateLSF(std::vector<fastjet::PseudoJet> iCParticles, std::vector<fastjet::PseudoJet> &lsubjets,
 			     float ilPt, float ilEta, float ilPhi, int ilId, double dr, int nsj);
+  // ecfs
+  EnergyCorrelations* fECF;
 
 private:
   FatJetMatching fjmatch_;

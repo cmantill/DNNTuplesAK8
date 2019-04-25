@@ -18,6 +18,7 @@ void FatJetInfoFiller::readConfig(const edm::ParameterSet& iConfig, edm::Consume
   isQCDSample_ = iConfig.getUntrackedParameter<bool>("isQCDSample", false);
   isTrainSample_ = iConfig.getUntrackedParameter<bool>("isTrainSample", false);
   fjName = iConfig.getParameter<std::string>("jetType") + std::to_string(int(10*jetR_));
+  fECF = new EnergyCorrelations();
 }
 
 void FatJetInfoFiller::readEvent(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
@@ -183,6 +184,21 @@ void FatJetInfoFiller::book() {
   data.add<float>("fj_lepPhi", 0);
   data.add<int>("fj_lepId", 0);
 
+  // more substructure
+  data.add<float>("fj_e2_sdb1", 0);
+  data.add<float>("fj_e3_sdb1", 0);
+  data.add<float>("fj_e3_v1_sdb1", 0);
+  data.add<float>("fj_e3_v2_sdb1", 0);
+  data.add<float>("fj_e4_v1_sdb1", 0);
+  data.add<float>("fj_e4_v2_sdb1", 0);
+  data.add<float>("fj_c1sdb1", 0);
+  data.add<float>("fj_c2sdb1", 0);
+  data.add<float>("fj_n2sdb1", 0);
+  data.add<float>("fj_m2sdb1", 0);
+  data.add<float>("fj_d2sdb1", 0);
+  data.add<float>("fj_m3sdb1", 0);
+  data.add<float>("fj_n3sdb1", 0);
+
 }
 
 bool FatJetInfoFiller::fill(const pat::Jet& jet, size_t jetidx, const JetHelper& jet_helper) {
@@ -259,6 +275,7 @@ bool FatJetInfoFiller::fill(const pat::Jet& jet, size_t jetidx, const JetHelper&
   float tau1 = jet.userFloat("Njettiness" + fjName +"Puppi:tau1");
   float tau2 = jet.userFloat("Njettiness" + fjName +"Puppi:tau2");
   float tau3 = jet.userFloat("Njettiness" + fjName +"Puppi:tau3");
+
   data.fill<float>("fj_tau1", tau1);
   data.fill<float>("fj_tau2", tau2);
   data.fill<float>("fj_tau3", tau3);
@@ -401,6 +418,51 @@ bool FatJetInfoFiller::fill(const pat::Jet& jet, size_t jetidx, const JetHelper&
   data.fill<float>("fj_lepEta",  lepEta);
   data.fill<float>("fj_lepPhi",  lepPhi);
   data.fill<int>("fj_lepId",     fjlabel.first == lepId);
+
+  // more substructure :)
+  fastjet::JetDefinition lCJet_def(fastjet::cambridge_algorithm, 2.0);
+  fastjet::ClusterSequence lCClust_seq(lClusterParticles, lCJet_def);
+  std::vector<fastjet::PseudoJet> inclusive_jets = lCClust_seq.inclusive_jets(0);
+  fastjet::contrib::SoftDrop sd(0.,0.1,2.0);
+  fastjet::PseudoJet sd_jet = sd(inclusive_jets[0]);
+  double beta=1;
+  std::vector<fastjet::PseudoJet> lSDClusterParticles = sd_jet.constituents();
+  std::sort(lSDClusterParticles.begin(),lSDClusterParticles.end(),orderPseudoJet);
+  int nFilter = TMath::Min(100,(int)lSDClusterParticles.size());
+  std::vector<fastjet::PseudoJet> lSDFiltered(lSDClusterParticles.begin(),lSDClusterParticles.begin()+nFilter);
+  fECF->calcECFN(beta,lSDFiltered,true);
+  float e2_sdb1; e2_sdb1 = float(fECF->manager->ecfns["2_2"]);
+  float e3_sdb1; e3_sdb1 = float(fECF->manager->ecfns["3_3"]);
+  float e3_v1_sdb1; e3_v1_sdb1 = float(fECF->manager->ecfns["3_1"]);
+  float e3_v2_sdb1; e3_v2_sdb1 = float(fECF->manager->ecfns["3_2"]);
+  float e4_v1_sdb1; e4_v1_sdb1 = float(fECF->manager->ecfns["4_1"]);
+  float e4_v2_sdb1; e4_v2_sdb1 = float(fECF->manager->ecfns["4_2"]);
+
+  float C1sdb1=0; C1sdb1 = e2_sdb1;
+  float C2sdb1=0; C2sdb1 = e3_sdb1/(e2_sdb1*e2_sdb1);
+  float N2sdb1=0; N2sdb1 = e3_v2_sdb1/(e2_sdb1*e2_sdb1);
+  float M2sdb1=0; M2sdb1 = e3_v1_sdb1/e2_sdb1;
+  float D2sdb1=0; D2sdb1 = e3_sdb1/(e2_sdb1*e2_sdb1*e2_sdb1);
+  float M3sdb1=0; M3sdb1 = e4_v1_sdb1/e3_sdb1;
+  float N3sdb1=0; N3sdb1 = e4_v2_sdb1/(e3_sdb1*e3_sdb1);
+
+  data.fill<float>("fj_e2_sdb1", e2_sdb1);
+  data.fill<float>("fj_e3_sdb1", e3_sdb1);
+  data.fill<float>("fj_e3_v1_sdb1", e3_v1_sdb1);
+  data.fill<float>("fj_e3_v2_sdb1", e3_v2_sdb1);
+  data.fill<float>("fj_e4_v1_sdb1", e4_v1_sdb1);
+  data.fill<float>("fj_e4_v2_sdb1", e4_v2_sdb1);
+  data.fill<float>("fj_c1sdb1", C1sdb1);
+  data.fill<float>("fj_c2sdb1", C2sdb1);
+  data.fill<float>("fj_n2sdb1", N2sdb1);
+  data.fill<float>("fj_m2sdb1", M2sdb1);
+  data.fill<float>("fj_d2sdb1", D2sdb1);
+  data.fill<float>("fj_m3sdb1", M3sdb1);
+  data.fill<float>("fj_n3sdb1", N3sdb1);
+
+  // https://arxiv.org/pdf/1710.01305.pdf
+  //float beta3; beta3 = tau2
+  //data.fill<float>("fj_beta3", 0);
 
   return true;
 }
