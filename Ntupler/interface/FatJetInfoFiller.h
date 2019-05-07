@@ -25,8 +25,12 @@ namespace deepntuples {
 class FatJetInfoFiller: public NtupleBase {
 public:
   FatJetInfoFiller() : FatJetInfoFiller("") {}
-  FatJetInfoFiller(std::string branchName, double jetR=0.8) : NtupleBase(branchName, jetR), fjmatch_(jetR, true) {}
-  virtual ~FatJetInfoFiller() {}
+  FatJetInfoFiller(std::string branchName, double jetR=0.8) : NtupleBase(branchName, jetR), fjmatch_(jetR, true) {
+      fECF = new EnergyCorrelations();      
+    }
+  virtual ~FatJetInfoFiller() {
+    delete fECF;
+  }
 
   // get input parameters from the cfg file
   virtual void readConfig(const edm::ParameterSet& iConfig, edm::ConsumesCollector && cc) override;

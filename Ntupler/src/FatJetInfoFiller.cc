@@ -18,7 +18,6 @@ void FatJetInfoFiller::readConfig(const edm::ParameterSet& iConfig, edm::Consume
   isQCDSample_ = iConfig.getUntrackedParameter<bool>("isQCDSample", false);
   isTrainSample_ = iConfig.getUntrackedParameter<bool>("isTrainSample", false);
   fjName = iConfig.getParameter<std::string>("jetType") + std::to_string(int(10*jetR_));
-  fECF = new EnergyCorrelations();
 }
 
 void FatJetInfoFiller::readEvent(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
